@@ -1,14 +1,9 @@
 package com.minis.beans.factory.config;
 
 public class PropertyValue {
-
     private final String type;
     private final String name;
     private final Object value;
-    // public PropertyValue(String name, Object value) {
-    //     this.name = name;
-    //     this.value = value;
-    // }
 
     public PropertyValue(String type, String name, Object value) {
         this.type = type;
@@ -17,14 +12,16 @@ public class PropertyValue {
     }
 
     public String getType() {
-        return type;
+        return this.type;
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public Object getValue() {
-        return value;
+        return this.value;
     }
+
 }
+

@@ -7,7 +7,7 @@ public class PropertyValues {
     private final List<PropertyValue> propertyValueList;
 
     public PropertyValues() {
-        this.propertyValueList = new ArrayList<>(0);
+        this.propertyValueList = new ArrayList<PropertyValue>(10);
     }
 
     public List<PropertyValue> getPropertyValueList() {
@@ -34,6 +34,7 @@ public class PropertyValues {
         this.propertyValueList.remove(getPropertyValue(propertyName));
     }
 
+
     public PropertyValue[] getPropertyValues() {
         return this.propertyValueList.toArray(new PropertyValue[this.propertyValueList.size()]);
     }
@@ -49,11 +50,11 @@ public class PropertyValues {
 
     public Object get(String propertyName) {
         PropertyValue pv = getPropertyValue(propertyName);
-        return pv != null ? pv.getValue() : null;
+        return (pv != null ? pv.getValue() : null);
     }
 
     public boolean contains(String propertyName) {
-        return getPropertyValue(propertyName) != null;
+        return (getPropertyValue(propertyName) != null);
     }
 
     public boolean isEmpty() {
