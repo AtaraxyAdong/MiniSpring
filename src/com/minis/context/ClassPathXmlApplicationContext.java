@@ -1,30 +1,42 @@
 package com.minis.context;
 
-import com.minis.beans.BeanDefinition;
 import com.minis.beans.BeansException;
 import com.minis.beans.factory.BeanFactory;
-import com.minis.beans.factory.config.SimpleBeanFactory;
+import com.minis.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor;
+import com.minis.beans.factory.config.AutowireCapableBeanFactory;
+import com.minis.beans.factory.config.BeanFactoryPostProcessor;
 import com.minis.beans.factory.xml.XmlBeanDefinitionReader;
 import com.minis.core.ClassPathXmlResource;
 import com.minis.core.Resource;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ClassPathXmlApplicationContext implements BeanFactory, ApplicationEventPublisher {
-    SimpleBeanFactory beanFactory;
+    AutowireCapableBeanFactory beanFactory;
+    private final List<BeanFactoryPostProcessor> beanFactoryPostProcessors = new ArrayList<>();
 
     public ClassPathXmlApplicationContext(String fileName) {
-        this(fileName, false);
+        this(fileName, true);
     }
 
     public ClassPathXmlApplicationContext(String fileName, boolean isRefresh) {
         Resource res = new ClassPathXmlResource(fileName);
-        SimpleBeanFactory simpleBeanFactory = new SimpleBeanFactory();
-        XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(simpleBeanFactory);
+        AutowireCapableBeanFactory bf = new AutowireCapableBeanFactory();
+        XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(bf);
         reader.loadBeanDefinitions(res);
-        this.beanFactory = simpleBeanFactory;
-        if (isRefresh) {
-            this.beanFactory.refresh();
-        }
 
+        this.beanFactory = bf;
+
+        if (isRefresh) {
+            try {
+                refresh();
+            } catch (IllegalStateException e) {
+                e.printStackTrace();
+            } catch (BeansException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
@@ -60,4 +72,29 @@ public class ClassPathXmlApplicationContext implements BeanFactory, ApplicationE
         return this.beanFactory.getType(name);
     }
 
+    public List<BeanFactoryPostProcessor> getBeanFactoryPostProcessors() {
+        return this.beanFactoryPostProcessors;
+    }
+
+    public void addBeanFactoryPostProcessor(BeanFactoryPostProcessor postProcessor) {
+        this.beanFactoryPostProcessors.add(postProcessor);
+    }
+
+    public void refresh() throws BeansException, IllegalStateException {
+        // Register bean processors that intercept bean creation.
+        registerBeanPostProcessors(this.beanFactory);
+
+        // Initialize other special beans in specific context subclasses.
+        onRefresh();
+    }
+
+    private void registerBeanPostProcessors(AutowireCapableBeanFactory bf) {
+        // if (supportAutowire) {
+        bf.addBeanPostProcessor(new AutowiredAnnotationBeanPostProcessor());
+        //}
+    }
+
+    private void onRefresh() {
+        this.beanFactory.refresh();
+    }
 }

@@ -1,7 +1,5 @@
-package com.minis.beans;
+package com.minis.beans.factory.config;
 
-import com.minis.beans.factory.config.ArgumentValues;
-import com.minis.beans.factory.config.PropertyValues;
 
 public class BeanDefinition {
     String SCOPE_SINGLETON = "singleton";
@@ -9,7 +7,7 @@ public class BeanDefinition {
 
     private boolean lazyInit = true;
     private String[] dependsOn;
-    private ArgumentValues constructorArgumentValues;
+    private ConstructorArgumentValues constructorArgumentValues;
 
     private PropertyValues propertyValues;
     private String initMethodName;
@@ -85,11 +83,11 @@ public class BeanDefinition {
         return this.dependsOn;
     }
 
-    public void setConstructorArgumentValues(ArgumentValues constructorArgumentValues) {
-        this.constructorArgumentValues = (constructorArgumentValues != null ? constructorArgumentValues : new ArgumentValues());
+    public void setConstructorArgumentValues(ConstructorArgumentValues constructorArgumentValues) {
+        this.constructorArgumentValues = (constructorArgumentValues != null ? constructorArgumentValues : new ConstructorArgumentValues());
     }
 
-    public ArgumentValues getConstructorArgumentValues() {
+    public ConstructorArgumentValues getConstructorArgumentValues() {
         return this.constructorArgumentValues;
     }
 

@@ -205,27 +205,27 @@ Preface
 
 	从beandefinition中获取构造方法和Property
 	    	//handle constructor
-    		ArgumentValues argumentValues = bd.getConstructorArgumentValues();
-    		if (!argumentValues.isEmpty()) {
-        		Class<?>[] paramTypes = new Class<?>[argumentValues.getArgumentCount()];
-        		Object[] paramValues =   new Object[argumentValues.getArgumentCount()];
-    			for (int i=0; i<argumentValues.getArgumentCount(); i++) {
-    				ArgumentValue argumentValue = argumentValues.getIndexedArgumentValue(i);
-    				if ("String".equals(argumentValue.getType()) || "java.lang.String".equals(argumentValue.getType())) {
+    		ArgumentValues constructorArgumentValues = bd.getConstructorArgumentValues();
+    		if (!constructorArgumentValues.isEmpty()) {
+        		Class<?>[] paramTypes = new Class<?>[constructorArgumentValues.getArgumentCount()];
+        		Object[] paramValues =   new Object[constructorArgumentValues.getArgumentCount()];
+    			for (int i=0; i<constructorArgumentValues.getArgumentCount(); i++) {
+    				ArgumentValue constructorArgumentValue = constructorArgumentValues.getIndexedArgumentValue(i);
+    				if ("String".equals(constructorArgumentValue.getType()) || "java.lang.String".equals(constructorArgumentValue.getType())) {
     					paramTypes[i] = String.class;
-        				paramValues[i] = argumentValue.getValue();
+        				paramValues[i] = constructorArgumentValue.getValue();
     				}
-    				else if ("Integer".equals(argumentValue.getType()) || "java.lang.Integer".equals(argumentValue.getType())) {
+    				else if ("Integer".equals(constructorArgumentValue.getType()) || "java.lang.Integer".equals(constructorArgumentValue.getType())) {
     					paramTypes[i] = Integer.class;
-        				paramValues[i] = Integer.valueOf((String) argumentValue.getValue());
+        				paramValues[i] = Integer.valueOf((String) constructorArgumentValue.getValue());
     				}
-    				else if ("int".equals(argumentValue.getType())) {
+    				else if ("int".equals(constructorArgumentValue.getType())) {
     					paramTypes[i] = int.class;
-        				paramValues[i] = Integer.valueOf((String) argumentValue.getValue()).intValue();
+        				paramValues[i] = Integer.valueOf((String) constructorArgumentValue.getValue()).intValue();
     				}
     				else {
     					paramTypes[i] = String.class;
-        				paramValues[i] = argumentValue.getValue();
+        				paramValues[i] = constructorArgumentValue.getValue();
     				}
     			}
 				try {
