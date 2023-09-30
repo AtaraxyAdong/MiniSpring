@@ -9,7 +9,7 @@ public class Test1 {
         ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("beans.xml");
         AService aService;
         try {
-            aService = (AService) ctx.getBean("aservice");
+            aService = (AService)ctx.getBean("aservice");
             aService.sayHello();
         } catch (BeansException e) {
             e.printStackTrace();

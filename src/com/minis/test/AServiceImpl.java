@@ -1,11 +1,19 @@
 package com.minis.test;
 
-
 public class AServiceImpl implements AService {
     private String name;
     private int level;
     private String property1;
     private String property2;
+    private BaseService ref1;
+
+    public BaseService getRef1() {
+        return ref1;
+    }
+
+    public void setRef1(BaseService bs) {
+        this.ref1 = bs;
+    }
 
     public String getProperty1() {
         return property1;
@@ -31,8 +39,8 @@ public class AServiceImpl implements AService {
         this.level = level;
     }
 
-    @Override
     public void sayHello() {
-        System.out.println(this.property1 + "," + this.property2);
+        System.out.print(this.property1 + "," + this.property2);
+        ref1.sayHello();
     }
 }
